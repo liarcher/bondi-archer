@@ -16,6 +16,37 @@ data = {
 # Create a dataframe
 df = pd.DataFrame(data, index=['gp', 'ep', 'specialist', 'population(k)', 'population growth'])
 
+
+def avg(column):
+    return sum(column) / len(column)
+
+
+def ratio(df):
+    return avg(df.loc['gp']), avg(df.loc['ep']), avg(df.loc['specialist'])
+
+
+def prediction(population, growth, ratio):
+    return round(population * (1 + growth) * ratio)
+
+
+# Create a dataframe
+city = 'Kingsford'
+data = pd.DataFrame(data, index=['gp', 'ep', 'specialist', 'population(k)', 'population growth'], columns=[city])
+# print(data)
+gp_ratio, ep_ratio, specialist_ratio = ratio(data)
+print(gp_ratio, ep_ratio, specialist_ratio)
+city = data[city]
+# print(city)
+city.loc['expected_gp'] = prediction(city.loc['population(k)'], city.loc['population growth'], gp_ratio)
+city.loc['expected_ep'] = prediction(city.loc['population(k)'], city.loc['population growth'], ep_ratio)
+city.loc['expected_sp'] = prediction(city.loc['population(k)'], city.loc['population growth'], specialist_ratio)
+print(city)
+
+# Save dataframe to an Excel file
+city.to_excel(f'{city}_data.xlsx')
+
+print(f"Excel file '{city}_data.xlsx' has been created!")
+
 # Save dataframe to an Excel file
 df.to_excel('data.xlsx')
 
