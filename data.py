@@ -2,14 +2,15 @@ import pandas as pd
 
 # Define the data based on your description
 data = {
-    'Kingsford': [5, 3, 3, 31, 3.5],
-    'Maroubra': [3, 1, 5, 24, 2.2],
-    'Manly': [3, 2, 5, 11, 1.1],
-    'Wollongong': [4, 2, 1, 10, -0.2],
-    'CBD': [3, 8, 5, 20, 1.8],
-    'Epping': [3, 8, 5, 20, 2.2],
-    'Blacktown': [3, 8, 5, 11, 2.2],
-    'Randwick': [2, 3, 6, 10, -4.2]
+    'Kingsford':    [5/31, 3/31, 3/31, 31, 0.035],
+    'Maroubra':     [3/24, 1/24, 5/24, 24, 0.022],
+    'Manly':        [3/11, 2/11, 5/11, 11, 0.011],
+    'Wollongong':   [4/10, 2/10, 1/10, 10, -0.02],
+    'CBD':          [3/20, 11/200, 5/20, 20, 0.018],
+    'Epping':       [4/20, 22/200, 5/20, 20, 0.022],
+    'Blacktown':    [1/11, 9/11, 4/11, 11, 0.022],
+    'Randwick':     [2/10, 3/10, 6/10, 10, -0.042],
+    #'Average' :     []
 }
 
 # Create a dataframe

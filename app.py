@@ -20,5 +20,6 @@ def index():
 
     return render_template('index.html', categories=categories, values=values, average_values=average_values)
 
+
 if __name__ == '__main__':
     app.run(debug=True)
