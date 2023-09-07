@@ -5,11 +5,13 @@ bondi-archer
 Desirability
 - Use rescources more efficent
 
-Feasibility
-- use the data visulization to make a better decision
+Feasibility can you make this
+- use the data visualisation to make a better decision
 - use AI tech to predict the future demands we need
+- 
 
 
-Visibility
-- compare with 
+Viable benifits greater than the costs
+- compare with other areas
+- 
 
