@@ -31,7 +31,7 @@
 
             // Create a new chart container
             var chartContainer = document.createElement('div');
-            chartContainer.innerHTML = '<canvas class="myChart" width="400" height="200"></canvas>';
+            chartContainer.innerHTML = '<canvas class="myChart" width="600" height="300"></canvas>';
 
             // Append the new chart container
             document.getElementById('chartContainer').appendChild(chartContainer);
@@ -57,7 +57,7 @@
                 }
 
                 var labels = ['gp', 'ep', 'specialist', 'population growth'];
-                var values = [data.values[0], data.values[1], data.values[2], data.values[4]];  // Extracting relevant values and excluding 'population(k)'
+                var values = [data.values[0], data.values[1], data.values[2], data.values[4]];
 
                 // Create a new chart
                 var myChart = new Chart(ctx, {
@@ -73,8 +73,8 @@
                         }]
                     },
                     options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
+                        responsive: false,
+                        maintainAspectRatio: true, // or false if you want the chart to fill its container
                         scales: {
                             x: {
                                 title: {
@@ -91,6 +91,16 @@
                         }
                     }
                 });
+                
+
+                // Create and display expected values below the chart
+                var expectedValuesDiv = document.createElement('div');
+                expectedValuesDiv.innerHTML = `
+                    Expected GP: ${data.expected_gp}<br>
+                    Expected EP: ${data.expected_ep}<br>
+                    Expected Specialist: ${data.expected_sp}
+                `;
+                chartContainer.appendChild(expectedValuesDiv);
             })
             .catch(error => console.error('Error:', error));
         }
