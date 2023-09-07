@@ -8,16 +8,17 @@ df = pd.read_excel('data.xlsx', index_col=0)
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
-    data, query, average = {}, "", 0
-    
+    categories, values, average_values = [], [], []
+
     if request.method == 'POST':
-        query = request.form.get('query')
-        
-        if query in df.columns:
-            data = df[query].to_dict()
-            average = df.mean(axis=1).to_dict()
-    
-    return render_template('index.html', data=data, query=query, average=average)
+        location = request.form.get('query').strip().lower()
+
+        if location in df.index:
+            categories = list(df.columns)
+            values = df.loc[location].tolist()
+            average_values = df.mean().tolist()
+
+    return render_template('index.html', categories=categories, values=values, average_values=average_values)
 
 if __name__ == '__main__':
     app.run(debug=True)
