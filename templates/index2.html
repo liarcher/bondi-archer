@@ -1,43 +1,45 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-    <title>Data Visualization</title>
+    <title>Statistics</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
-<body>
-    <h1>Data Visualization</h1>
 
-    <!-- 初始搜索框 -->
+<body>
+    <h1>Statistics</h1>
+
+    <!-- Initial search input -->
     <input type="text" class="locationInput" placeholder="Enter location">
     <button onclick="generateChart()">Generate Chart</button>
 
-    <!-- 图表容器 -->
+    <!-- Chart container -->
     <div id="chartContainer">
         <canvas class="myChart" width="400" height="200"></canvas>
     </div>
 
-    <!-- 添加新的搜索框的按钮 -->
+    <!-- Button to add a new search input -->
     <button onclick="addNewInput()">Add New Location Input</button>
 
     <script>
         function generateChart() {
-            // 获取所有输入框
+            // Get all input elements
             var locationInputs = document.querySelectorAll('.locationInput');
 
-            // 获取当前搜索框的值
+            // Get the current input value
             var location = locationInputs[locationInputs.length - 1].value;
 
-            // 创建新的图表容器
+            // Create a new chart container
             var chartContainer = document.createElement('div');
             chartContainer.innerHTML = '<canvas class="myChart" width="400" height="200"></canvas>';
 
-            // 插入新的图表容器
+            // Append the new chart container
             document.getElementById('chartContainer').appendChild(chartContainer);
 
-            // 获取新的图表容器对应的上下文
+            // Get the context for the new chart container
             var ctx = chartContainer.querySelector('.myChart').getContext('2d');
 
-            // 向服务器发送请求以获取数据
+            // Send a request to the server to get data
             fetch('/fetch_data', {
                 method: 'POST',
                 body: new URLSearchParams({
@@ -54,10 +56,10 @@
                     return;
                 }
 
-                var labels = ['gp', 'ep', 'specialist', 'population(k)', 'population growth'];
-                var values = data.values;
+                var labels = ['gp', 'ep', 'specialist', 'population growth'];
+                var values = [data.values[0], data.values[1], data.values[2], data.values[4]];  // Extracting relevant values and excluding 'population(k)'
 
-                // 创建一个新的图表
+                // Create a new chart
                 var myChart = new Chart(ctx, {
                     type: 'bar',
                     data: {
@@ -83,7 +85,7 @@
                             y: {
                                 title: {
                                     display: true,
-                                    text: 'Quantity'
+                                    text: 'Ratio'
                                 }
                             }
                         }
@@ -93,14 +95,15 @@
             .catch(error => console.error('Error:', error));
         }
 
-        // 添加新的搜索框
+        // Function to add a new search input
         function addNewInput() {
             var inputContainer = document.createElement('div');
             inputContainer.innerHTML = '<input type="text" class="locationInput" placeholder="Enter location">';
 
-            // 插入新的搜索框和按钮
+            // Insert the new input and button before the chart container
             document.body.insertBefore(inputContainer, document.querySelector('#chartContainer'));
         }
     </script>
 </body>
+
 </html>
