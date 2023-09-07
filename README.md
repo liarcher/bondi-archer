@@ -6,4 +6,10 @@ Desirability
 - Use rescources more efficent
 
 Feasibility
-Visability
+- use the data visulization to make a better decision
+- use AI tech to predict the future demands we need
+
+
+Visibility
+- compare with 
+
