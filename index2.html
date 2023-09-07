@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Data Visualization</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <h1>Data Visualization</h1>
+
+    <!-- 初始搜索框 -->
+    <input type="text" class="locationInput" placeholder="Enter location">
+    <button onclick="generateChart()">Generate Chart</button>
+
+    <!-- 图表容器 -->
+    <div id="chartContainer">
+        <canvas class="myChart" width="400" height="200"></canvas>
+    </div>
+
+    <!-- 添加新的搜索框的按钮 -->
+    <button onclick="addNewInput()">Add New Location Input</button>
+
+    <script>
+        function generateChart() {
+            // 获取所有输入框
+            var locationInputs = document.querySelectorAll('.locationInput');
+
+            // 获取当前搜索框的值
+            var location = locationInputs[locationInputs.length - 1].value;
+
+            // 创建新的图表容器
+            var chartContainer = document.createElement('div');
+            chartContainer.innerHTML = '<canvas class="myChart" width="400" height="200"></canvas>';
+
+            // 插入新的图表容器
+            document.getElementById('chartContainer').appendChild(chartContainer);
+
+            // 获取新的图表容器对应的上下文
+            var ctx = chartContainer.querySelector('.myChart').getContext('2d');
+
+            // 向服务器发送请求以获取数据
+            fetch('/fetch_data', {
+                method: 'POST',
+                body: new URLSearchParams({
+                    'location': location
+                }),
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if ('error' in data) {
+                    alert('Location not found');
+                    return;
+                }
+
+                var labels = ['gp', 'ep', 'specialist', 'population(k)', 'population growth'];
+                var values = data.values;
+
+                // 创建一个新的图表
+                var myChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: location,
+                            data: values,
+                            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                            borderColor: 'rgba(75, 192, 192, 1)',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            x: {
+                                title: {
+                                    display: true,
+                                    text: 'Category'
+                                }
+                            },
+                            y: {
+                                title: {
+                                    display: true,
+                                    text: 'Quantity'
+                                }
+                            }
+                        }
+                    }
+                });
+            })
+            .catch(error => console.error('Error:', error));
+        }
+
+        // 添加新的搜索框
+        function addNewInput() {
+            var inputContainer = document.createElement('div');
+            inputContainer.innerHTML = '<input type="text" class="locationInput" placeholder="Enter location">';
+
+            // 插入新的搜索框和按钮
+            document.body.insertBefore(inputContainer, document.querySelector('#chartContainer'));
+        }
+    </script>
+</body>
+</html>
