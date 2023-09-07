@@ -9,7 +9,7 @@ df = pd.read_excel(excel_file)
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return render_template('index2.html')
 
 @app.route('/fetch_data', methods=['POST'])
 def fetch_data():
