@@ -36,8 +36,9 @@ def ratio(df):
     return avg(df.loc['gp']), avg(df.loc['ep']), avg(df.loc['specialist'])
 
 
-def prediction(population, growth, ratio):
-    return round(population * (1 + growth) * ratio)
+def prediction(population, growth, ratio, real_gp_ratio, name):
+    return '{}     Current {}: {}'.format(round(population * (1 + growth) * ratio), name, round(population * real_gp_ratio))
+    # return ','.join(map(str,[round(population * (1 + growth) * ratio),'   Current GP:', population * real_gp_ratio]))
 
 
 @app.route('/fetch_data', methods=['POST'])
@@ -51,12 +52,13 @@ def fetch_data():
         labels = list(data.keys())
         values = list(data.values())
         expected_gp = prediction(df[location].loc['population(k)'], df[location].loc['population growth'],
-                                 gp_ratio)
+                                 gp_ratio, df[location].loc['gp'], 'GP')
 
         expected_ep = prediction(df[location].loc['population(k)'], df[location].loc['population growth'],
-                                 ep_ratio)
+                                 ep_ratio, df[location].loc['ep'], 'EP')
+
         expected_sp = prediction(df[location].loc['population(k)'], df[location].loc['population growth'],
-                                 sp_ratio)
+                                 sp_ratio, df[location].loc['specialist'], 'Specialist')
         return jsonify({
             'labels': labels,
             'values': values,
