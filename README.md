@@ -1,22 +1,4 @@
-# bondi-archer
-bondi-archer
+# HealthCare Resource Estimator
+We aim to address healthcare resource disparities and inefficiencies in allocation by developing a Healthcare Resource Estimator tool. This tool aims to promote fairness and enhance efficiency in healthcare resource distribution, ultimately improving accessibility and quality of healthcare services.
 
-
-Desirability
-- Use rescources more efficent
-
-Feasibility can you make this
-- use the data visualisation to make a better decision
-- use AI tech to predict the future demands we need
-- 
-
-
-Viable benifits greater than the costs
-- compare with other areas
-- 
-
-
-Future implementation.
-1. More general, comparing all the cities among Australia
-2. More sector for data preparation such as historical population figures for multiple years, birth rates, death rates, migration rates
-3. Including more specific categories (long-term, mid-term, short-term diseases)
+@bondi-archer
